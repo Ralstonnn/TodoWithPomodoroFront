@@ -1,9 +1,15 @@
 import { useState } from "react";
+import MainView from "./views/MainView";
+import Container from "./components/common/Container";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return <div className="App"></div>;
+  return (
+    <div className="App">
+      <Container>
+        <MainView />
+      </Container>
+    </div>
+  );
 }
 
 export default App;
