@@ -1,0 +1,45 @@
+.todo-item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+
+  &-input {
+    margin-top: 10px;
+    padding: 5px;
+  }
+  &-add {
+    margin-left: 10px;
+    padding: 5px 10px;
+  }
+}
+
+.delete-btn {
+  position: relative;
+  display: block;
+  outline: none;
+  border: none;
+  width: 12px;
+  height: 12px;
+  background: none;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity .2s ease-in-out;
+
+  &:before,
+  &:after{
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 12px;
+    height: 2px;
+    background: black;
+  }
+  &:before {
+    rotate: 45deg;
+  }
+  &:after {
+    rotate: -45deg;
+  }
+}

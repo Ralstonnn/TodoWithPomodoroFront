@@ -1,4 +1,3 @@
-import { useState } from "react";
 import MainView from "./views/MainView";
 import Container from "./components/common/Container";
 
