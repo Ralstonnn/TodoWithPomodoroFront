@@ -1,19 +1,18 @@
 import "../../style/todo/todo-item.scss";
 import { TodoItemType } from "../../types/todo";
-import React, { useState } from "react";
+import { useState } from "react";
 import api from "../../api";
 
 type Props = {
   item: TodoItemType;
   onDeleteClick: Function;
+  onCheckClick: Function;
 };
 
-export default function TodoItem({ item, onDeleteClick }: Props) {
-  const [isDone, setIsDone] = useState(item.isDone);
+export default function TodoItem({ item, onDeleteClick, onCheckClick }: Props) {
   const [isHovered, setIsHovered] = useState(false);
   const onCheck = async () => {
-    const response = await api.setIsChecked(item.id, !isDone);
-    if (response.success) setIsDone(response.data.value);
+    // if (response.success) setIsDone(response.data.value);
   };
 
   return (
@@ -22,8 +21,14 @@ export default function TodoItem({ item, onDeleteClick }: Props) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <input type="checkbox" checked={isDone} onChange={onCheck} />
-      <span>{item.text}</span>
+      <input
+        type="checkbox"
+        checked={item.isDone}
+        onChange={() => onCheckClick()}
+      />
+      <span className={`todo-item-text ${item.isDone ? "cross-out" : ""}`}>
+        {item.text}
+      </span>
       <button
         className={`delete-btn ${!isHovered ? "hide" : ""}`}
         onClick={() => onDeleteClick(item)}

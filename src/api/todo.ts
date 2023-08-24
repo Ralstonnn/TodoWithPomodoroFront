@@ -1,4 +1,5 @@
 import { $http } from "./http";
+import { TodoItemType } from "../types/todo";
 
 const BASE_URL = "/todo";
 
@@ -22,4 +23,9 @@ export async function addTodoItem(text: string) {
 export async function deleteTodoItem(id: number) {
   const endpoint = BASE_URL;
   return await $http.delete(endpoint, { params: { id } });
+}
+
+export async function deleteDoneTodoItems(ids: number[]) {
+  const endpoint = `${BASE_URL}/delete-done`;
+  return await $http.delete(endpoint);
 }

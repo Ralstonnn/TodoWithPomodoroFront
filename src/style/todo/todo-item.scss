@@ -1,4 +1,4 @@
-.todo-item{
+.todo-item {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -12,6 +12,21 @@
     margin-left: 10px;
     padding: 5px 10px;
   }
+  &-text {
+    position: relative;
+    &.cross-out {
+      &::before {
+        content: " ";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateX(-5px);
+        width: calc(100% + 10px);
+        height: 2px;
+        background: black;
+      }
+    }
+  }
 }
 
 .delete-btn {
@@ -24,10 +39,10 @@
   background: none;
   cursor: pointer;
   opacity: 1;
-  transition: opacity .2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
 
   &:before,
-  &:after{
+  &:after {
     content: " ";
     position: absolute;
     left: 0;

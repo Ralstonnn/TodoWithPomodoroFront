@@ -1,5 +1,5 @@
 import TodoItem from "../components/todo/TodoItem";
-import React, { KeyboardEventHandler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TodoItemType } from "../types/todo";
 import api from "../api";
 
@@ -30,6 +30,31 @@ export default function MainView() {
     }
   };
 
+  const onItemCheckClick = async (index: number) => {
+    const { id: itemId, isDone: itemIsDone } = todoItems[index];
+    const response = await api.setIsChecked(itemId, !itemIsDone);
+    if (response.success) {
+      setTodoItems((prevValue) =>
+        prevValue.map((item) => {
+          if (item.id === itemId)
+            return { ...item, isDone: response.data.value };
+          return item;
+        })
+      );
+    }
+  };
+
+  const onDeleteDoneClick = async () => {
+    const doneItemsIds = todoItems.reduce((acc, item) => {
+      if (item.isDone) acc.push(item.id);
+      return acc;
+    }, [] as number[]);
+    const response = await api.deleteDoneTodoItems(doneItemsIds);
+    if (response.success) {
+      setTodoItems(response.data);
+    }
+  };
+
   useEffect(() => {
     api.getTodos().then((response) => {
       if (response.success) {
@@ -41,12 +66,16 @@ export default function MainView() {
   return (
     <div className="main-view">
       <h1>Hello World</h1>
+      <button type="button" onClick={onDeleteDoneClick}>
+        DeleteAllChecked
+      </button>
 
-      {todoItems.map((todoItem) => (
+      {todoItems.map((todoItem, index) => (
         <TodoItem
           key={todoItem.id}
           item={todoItem}
           onDeleteClick={deleteTodoItem}
+          onCheckClick={() => onItemCheckClick(index)}
         />
       ))}
 
