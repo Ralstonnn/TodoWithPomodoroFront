@@ -2,6 +2,7 @@ import TodoItem from "../components/todo/TodoItem";
 import React, { useEffect, useState } from "react";
 import { TodoItemType } from "../types/todo";
 import api from "../api";
+import Container from "../components/common/Container";
 
 export default function MainView() {
   const [todoItems, setTodoItems] = useState<TodoItemType[]>([]);
@@ -64,34 +65,36 @@ export default function MainView() {
   }, []);
 
   return (
-    <div className="main-view">
-      <h1>Hello World</h1>
-      <button type="button" onClick={onDeleteDoneClick}>
-        DeleteAllChecked
-      </button>
-
-      {todoItems.map((todoItem, index) => (
-        <TodoItem
-          key={todoItem.id}
-          item={todoItem}
-          onDeleteClick={deleteTodoItem}
-          onCheckClick={() => onItemCheckClick(index)}
-        />
-      ))}
-
-      <div className="todo-item-input-container">
-        <input
-          className="todo-item-input"
-          type="text"
-          placeholder="Enter new todo item"
-          value={todoInput}
-          onKeyDown={onTodoInputKeyDown}
-          onInput={(e) => setTodoInput((e.target as HTMLInputElement).value)}
-        />
-        <button className="todo-item-add" onClick={addNewTodoItem}>
-          Add
+    <Container>
+      <div className="main-view">
+        <h1>Hello World</h1>
+        <button type="button" onClick={onDeleteDoneClick}>
+          DeleteAllChecked
         </button>
+
+        {todoItems.map((todoItem, index) => (
+          <TodoItem
+            key={todoItem.id}
+            item={todoItem}
+            onDeleteClick={deleteTodoItem}
+            onCheckClick={() => onItemCheckClick(index)}
+          />
+        ))}
+
+        <div className="todo-item-input-container">
+          <input
+            className="todo-item-input"
+            type="text"
+            placeholder="Enter new todo item"
+            value={todoInput}
+            onKeyDown={onTodoInputKeyDown}
+            onInput={(e) => setTodoInput((e.target as HTMLInputElement).value)}
+          />
+          <button className="todo-item-add" onClick={addNewTodoItem}>
+            Add
+          </button>
+        </div>
       </div>
-    </div>
+    </Container>
   );
 }

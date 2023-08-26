@@ -1,7 +1,7 @@
 import "../../style/todo/todo-item.scss";
 import { TodoItemType } from "../../types/todo";
 import { useState } from "react";
-import api from "../../api";
+import CloseButton from "../common/CloseButton";
 
 type Props = {
   item: TodoItemType;
@@ -29,8 +29,8 @@ export default function TodoItem({ item, onDeleteClick, onCheckClick }: Props) {
       <span className={`todo-item-text ${item.isDone ? "cross-out" : ""}`}>
         {item.text}
       </span>
-      <button
-        className={`delete-btn ${!isHovered ? "hide" : ""}`}
+      <CloseButton
+        className={!isHovered ? "hide" : ""}
         onClick={() => onDeleteClick(item)}
       />
     </div>
