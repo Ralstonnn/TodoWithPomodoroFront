@@ -1,0 +1,11 @@
+.todo-layout {
+  .todo-items-container {
+    margin-top: 20px;
+    display: inline-block;
+    position: relative;
+    &.loading {
+      min-height: 100px;
+      min-width: 80px;
+    }
+  }
+}

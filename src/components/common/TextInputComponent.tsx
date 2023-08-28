@@ -3,6 +3,7 @@ import "../../style/common/text-input-component.scss";
 type Props = {
   type?: "text" | "email" | "password";
   placeholder?: string;
+  disabled?: boolean;
   value: string;
   onInput: Function;
 };
@@ -10,6 +11,7 @@ type Props = {
 export default function TextInputComponent({
   type = "text",
   placeholder,
+  disabled = false,
   value,
   onInput,
 }: Props) {
@@ -20,6 +22,7 @@ export default function TextInputComponent({
       placeholder={placeholder}
       value={value}
       onInput={(e) => onInput(e)}
+      disabled={disabled}
     />
   );
 }

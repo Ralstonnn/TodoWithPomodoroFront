@@ -28,4 +28,12 @@ export default class userService {
   static getToken() {
     return this.user.token;
   }
+
+  static reset() {
+    this.user = {
+      profile: null,
+      token: null,
+    };
+    localStorage.removeItem("user");
+  }
 }

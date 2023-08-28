@@ -10,14 +10,16 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   const init = async () => {
-    if (!userService.user.token?.length && location.pathname !== "/auth") {
-      console.log("GetProfile");
+    if (
+      !userService.user.profile &&
+      location.pathname !== "/auth/register" &&
+      location.pathname !== "/auth/login"
+    ) {
       const response = await api.user.getProfile();
-      console.log("GetProfile done");
-      console.log(response);
       if (response.success) {
         userService.user.profile = response.data.profile;
         userService.user.token = response.data.token;
+        userService.saveUserData();
       }
     }
     setLoading(false);
@@ -25,9 +27,16 @@ export default function App() {
 
   const componentToRender = () => {
     if (loading) return <RootPreloader />;
-    else if (!userService.user.token && location.pathname !== "/auth") {
+    else if (
+      !userService.user.token &&
+      location.pathname !== "/auth/register" &&
+      location.pathname !== "/auth/login"
+    ) {
       window.location.replace(
-        window.location.protocol + "//" + window.location.hostname + "/auth"
+        window.location.protocol +
+          "//" +
+          window.location.hostname +
+          "/auth/login"
       );
       return <RootPreloader />;
     }
