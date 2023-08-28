@@ -11,7 +11,7 @@ export default function MainView() {
   const addNewTodoItem = async () => {
     if (!todoInput.length) return;
 
-    const response = await api.addTodoItem(todoInput);
+    const response = await api.todo.addTodoItem(todoInput);
     if (response.success) {
       setTodoInput("");
       setTodoItems(response.data);
@@ -19,7 +19,7 @@ export default function MainView() {
   };
 
   const deleteTodoItem = async (item: TodoItemType) => {
-    const response = await api.deleteTodoItem(item.id);
+    const response = await api.todo.deleteTodoItem(item.id);
     if (response.success) {
       setTodoItems(response.data);
     }
@@ -33,7 +33,7 @@ export default function MainView() {
 
   const onItemCheckClick = async (index: number) => {
     const { id: itemId, isDone: itemIsDone } = todoItems[index];
-    const response = await api.setIsChecked(itemId, !itemIsDone);
+    const response = await api.todo.setIsChecked(itemId, !itemIsDone);
     if (response.success) {
       setTodoItems((prevValue) =>
         prevValue.map((item) => {
@@ -50,14 +50,14 @@ export default function MainView() {
       if (item.isDone) acc.push(item.id);
       return acc;
     }, [] as number[]);
-    const response = await api.deleteDoneTodoItems(doneItemsIds);
+    const response = await api.todo.deleteDoneTodoItems(doneItemsIds);
     if (response.success) {
       setTodoItems(response.data);
     }
   };
 
   useEffect(() => {
-    api.getTodos().then((response) => {
+    api.todo.getTodos().then((response) => {
       if (response.success) {
         setTodoItems(response.data);
       }

@@ -1,6 +1,9 @@
 import TextInputComponent from "../common/TextInputComponent";
 import React, { FormEvent, useState } from "react";
 import ButtonComponent from "../common/ButtonComponent";
+import api from "../../api";
+import { useNavigate } from "react-router-dom";
+import userService from "../../services/userService";
 
 export default function RegisterForm() {
   const [data, setData] = useState({
@@ -8,6 +11,7 @@ export default function RegisterForm() {
     password: "",
     passwordRepeat: "",
   });
+  const navigate = useNavigate();
 
   const resetInputs = () => {
     setData({
@@ -25,17 +29,22 @@ export default function RegisterForm() {
     );
   };
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputsValid()) {
       resetInputs();
       return;
     }
-    console.log("submit login");
-    console.log(`username: ${data.username}`);
-    console.log(`password: ${data.password}`);
-    console.log(`password repeat: ${data.passwordRepeat}`);
-    resetInputs();
+    const response = await api.user.register(data);
+    if (response.success) {
+      resetInputs();
+      userService.user.profile = response.data.profile;
+      userService.user.token = response.data.token;
+      userService.saveUserData();
+      navigate("/", { replace: true });
+    } else if (response.error) {
+      alert(response.message);
+    }
   };
 
   return (

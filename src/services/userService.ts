@@ -1,8 +1,18 @@
-import { $http } from "../api/http";
+export type UserProfile = {
+  id: number;
+  username: string;
+  password: string;
+};
+
+type User = {
+  profile: UserProfile | null;
+  token: string | null;
+};
 
 export default class userService {
-  static user = {
-    isLoggedIn: false,
+  static user: User = {
+    profile: null,
+    token: null,
   };
 
   static initUserData() {
@@ -15,11 +25,7 @@ export default class userService {
     localStorage.setItem("user", JSON.stringify(this.user));
   }
 
-  static async authenticateUser() {
-    return this.user.isLoggedIn;
-  }
-
-  static isAuthorized() {
-    return this.user.isLoggedIn;
+  static getToken() {
+    return this.user.token;
   }
 }

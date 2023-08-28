@@ -1,5 +1,5 @@
-import { $http } from "./http";
-import { TodoItemType } from "../types/todo";
+import { $http } from "../http";
+import { TodoItemType } from "../../types/todo";
 
 const BASE_URL = "/todo";
 

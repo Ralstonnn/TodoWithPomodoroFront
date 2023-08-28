@@ -2,25 +2,36 @@ import "../../style/landing/login-form.scss";
 import React, { FormEvent, useState } from "react";
 import TextInputComponent from "../common/TextInputComponent";
 import ButtonComponent from "../common/ButtonComponent";
+import api from "../../api";
+import { useNavigate } from "react-router-dom";
+import userService from "../../services/userService";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const resetInputs = () => {
     setUsername("");
     setPassword("");
   };
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!username.length || !password.length) {
       resetInputs();
       return;
     }
-    console.log("submit login");
-    console.log(`username: ${username}`);
-    console.log(`password: ${password}`);
+    const response = await api.user.login({ username, password });
+    if (response.success) {
+      resetInputs();
+      userService.user.profile = response.data.profile;
+      userService.user.token = response.data.token;
+      userService.saveUserData();
+      navigate("/", { replace: true });
+    } else if (response.error) {
+      alert(response.message);
+    }
     resetInputs();
   };
 

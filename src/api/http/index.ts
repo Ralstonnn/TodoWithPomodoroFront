@@ -1,3 +1,5 @@
+import userService from "../../services/userService";
+
 export type GetParams = {
   params?: any;
   headers?: any;
@@ -9,6 +11,7 @@ export class $http {
     Accept: "*/*",
     "Content-Type": "application/json",
   };
+
   static async get(endpoint: string, data: GetParams = null) {
     let url = this.BASE_URL + endpoint;
     if (data && data.params) url += "?" + new URLSearchParams(data.params);
@@ -16,13 +19,22 @@ export class $http {
       data && data.headers
         ? { ...this.BASE_HEADERS, ...data.headers }
         : this.BASE_HEADERS;
-    return (
-      await fetch(url, {
-        method: "GET",
-        headers: headers,
-      })
-    ).json();
+    const token = userService.getToken();
+    if (token?.length) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+    try {
+      return (
+        await fetch(url, {
+          method: "GET",
+          headers: headers,
+        })
+      ).json();
+    } catch (e) {
+      return { error: true, message: "Something went wrong..." };
+    }
   }
+
   static async post(
     endpoint: string,
     body: { [key: string]: any },
@@ -31,6 +43,10 @@ export class $http {
     const headersObj = headers
       ? { ...this.BASE_HEADERS, ...headers }
       : this.BASE_HEADERS;
+    const token = userService.getToken();
+    if (token?.length) {
+      headersObj["Authorization"] = `Bearer ${token}`;
+    }
     return (
       await fetch(this.BASE_URL + endpoint, {
         method: "POST",
@@ -47,6 +63,10 @@ export class $http {
     const headersObj = headers
       ? { ...this.BASE_HEADERS, ...headers }
       : this.BASE_HEADERS;
+    const token = userService.getToken();
+    if (token?.length) {
+      headersObj["Authorization"] = `Bearer ${token}`;
+    }
     return (
       await fetch(this.BASE_URL + endpoint, {
         method: "PUT",
@@ -62,6 +82,10 @@ export class $http {
       data && data.headers
         ? { ...this.BASE_HEADERS, ...data.headers }
         : this.BASE_HEADERS;
+    const token = userService.getToken();
+    if (token?.length) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
     return (
       await fetch(url, {
         method: "DELETE",
