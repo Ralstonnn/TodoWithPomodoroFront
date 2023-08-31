@@ -18,6 +18,6 @@ jobs:
           chmod 600 ~/.ssh/known_hosts
       - name: pull and run docker
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORKDIR }} && git fetch && git pull && docker-compose build --no-cache && docker-compose stop && docker-compose rm && docker image prune -af --filter "label!=..." && docker-compose up -d"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORKDIR }} && git fetch && git pull && docker-compose build --no-cache && docker-compose stop && docker-compose rm && docker-compose up -d && docker image prune -af"
       - name: cleanup
         run: rm -rf ~/.ssh
