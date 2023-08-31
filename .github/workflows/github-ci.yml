@@ -14,7 +14,7 @@ jobs:
           touch ~/.ssh/id_ed25519
           touch ~/.ssh/known_hosts
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.SSH_KNOWN_HOST }} > ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_KNOWN_HOST }}" > ~/.ssh/known_hosts
       - name: pull and run docker
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ~/TodoWithPomodoroFront && git fetch && git pull && docker-compose up -d"
