@@ -8,6 +8,7 @@ export default function MainView() {
     <Container>
       <Header />
       <div className="main-view">
+        asfdasfasfasfasfasdf
         <Outlet />
       </div>
     </Container>
