@@ -8,7 +8,7 @@ export default function MainView() {
     <Container>
       <Header />
       <div className="main-view">
-        Something in here
+        Something in here 2
         <Outlet />
       </div>
     </Container>
