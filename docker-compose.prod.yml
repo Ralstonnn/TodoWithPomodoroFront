@@ -1,0 +1,5 @@
+services:
+  node:
+    image: ${{secrets.DOCKER_REGISRY}}:$SHORT_SHA
+    ports:
+      - 80:3000

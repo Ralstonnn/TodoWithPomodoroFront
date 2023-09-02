@@ -20,6 +20,7 @@ jobs:
           docker build --target node -t ${{secrets.DOCKER_REGISRY}}:$SHORT_SHA .
           docker push ${{secrets.DOCKER_REGISRY}}:$SHORT_SHA
   Deploy:
+    needs: BuildDockerImage
     runs-on: front-runner
     steps:
       - name: Add SHORT_SHA env property with commit short sha
