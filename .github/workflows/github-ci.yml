@@ -4,20 +4,13 @@ on:
       - main
 jobs:
   deploy:
-    name: deploy to server
+    name: build
     runs-on: ubuntu-latest
     steps:
-      - name: connect to server
-        run: |
-          mkdir ~/.ssh
-          touch ~/.ssh/id_ed25519
-          touch ~/.ssh/known_hosts
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          echo "${{ secrets.SSH_KNOWN_HOST }}" > ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/known_hosts
-      - name: pull and run docker
-        run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORKDIR }} && git fetch && git pull && docker-compose build --no-cache && docker-compose up -d && docker image prune -af"
-      - name: cleanup
-        run: rm -rf ~/.ssh
+      - uses: checkout@v3
+        run: echp ${{GITHUB_SHA}}
+      # - name: pull and run docker
+      #   run: |
+      #     ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORKDIR }} && git fetch && git pull && docker-compose build --no-cache && docker-compose up -d && docker image prune -af"
+      # - name: cleanup
+      #   run: rm -rf ~/.ssh
