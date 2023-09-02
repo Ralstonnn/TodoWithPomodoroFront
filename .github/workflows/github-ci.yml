@@ -4,12 +4,13 @@ on:
       - main
 jobs:
   BuildDockerImage:
-    name: checkout
     runs-on: ubuntu-latest
     steps:
+      - name: Add SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
       - name: checkout
         uses: actions/checkout@v3
-      - run: echo $GITHUB_SHA
+      - run: echo $SHORT_SHA
       # - name: pull and run docker
       #   run: |
       #     ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORKDIR }} && git fetch && git pull && docker-compose build --no-cache && docker-compose up -d && docker image prune -af"
