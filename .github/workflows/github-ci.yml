@@ -3,12 +3,13 @@ on:
     branches:
       - main
 jobs:
-  deploy:
-    name: build
+  BuildDockerImage:
+    name: checkout
     runs-on: ubuntu-latest
     steps:
-      - uses: checkout@v3
-        run: echp ${{GITHUB_SHA}}
+      - name: checkout
+        uses: actions/checkout@v3
+      - run: echo ${{GITHUB_SHA}}
       # - name: pull and run docker
       #   run: |
       #     ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORKDIR }} && git fetch && git pull && docker-compose build --no-cache && docker-compose up -d && docker image prune -af"
