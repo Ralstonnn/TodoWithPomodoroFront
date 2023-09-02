@@ -11,6 +11,8 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
       - run: echo $SHORT_SHA
+      - name: Login to docer 
+        run: docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_REGISTRY_TOKEN }} ${{ secrets.DOCKER_REGISRY }}
       # - name: pull and run docker
       #   run: |
       #     ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORKDIR }} && git fetch && git pull && docker-compose build --no-cache && docker-compose up -d && docker image prune -af"
