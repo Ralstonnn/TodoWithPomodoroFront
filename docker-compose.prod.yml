@@ -1,5 +1,5 @@
 services:
   node:
-    image: $DOCKER_REGISTRY:$SHORT_SHA
+    image: $DOCKER_REGISTRY/todo-node:$SHORT_SHA
     ports:
       - 80:3000

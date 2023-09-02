@@ -19,8 +19,8 @@ jobs:
         run: mv .env.prod .env
       - name: Build
         run: |
-          docker build --target node -t ${{secrets.DOCKER_REGISRY}}:$SHORT_SHA .
-          docker push ${{secrets.DOCKER_REGISRY}}:$SHORT_SHA
+          docker build --target node -t ${{secrets.DOCKER_REGISTRY}}/todo-node:$SHORT_SHA .
+          docker push ${{secrets.DOCKER_REGISTRY}}/todo-node:$SHORT_SHA
   Deploy:
     needs: BuildDockerImage
     runs-on: self-hosted
@@ -28,7 +28,7 @@ jobs:
       - name: Add SHORT_SHA env property with commit short sha
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
       - name: Export registry name
-        run: echo "DOCKER_REGISTRY=${{ secrets.DOCKER_REGISRY }}" >> $GITHUB_ENV
+        run: echo "DOCKER_REGISTRY=${{ secrets.DOCKER_REGISTRY }}" >> $GITHUB_ENV
       - name: checkout
         uses: actions/checkout@v3
       - name: Login to docker 
@@ -40,11 +40,3 @@ jobs:
         run: |
           docker-compose -f docker-compose.prod.yml up -d
           docker image prune -af
-        
-        
-        # run: docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_REGISTRY_TOKEN }} ${{ secrets.DOCKER_REGISRY }}
-      # - name: pull and run docker
-      #   run: |
-      #     ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORKDIR }} && git fetch && git pull && docker-compose build --no-cache && docker-compose up -d && docker image prune -af"
-      # - name: cleanup
-      #   run: rm -rf ~/.ssh
