@@ -21,7 +21,7 @@ jobs:
           docker push ${{secrets.DOCKER_REGISRY}}:$SHORT_SHA
   Deploy:
     needs: BuildDockerImage
-    runs-on: front-runner
+    runs-on: self-hosted
     steps:
       - name: Add SHORT_SHA env property with commit short sha
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
