@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Add SHORT_SHA env property with commit short sha
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+      - name: Add VITE_API_URL env property
+        run: echo "VITE_API_URL=${{secrets.VITE_API_URL}}" >> $GITHUB_ENV
       - name: checkout
         uses: actions/checkout@v3
       - name: Login to docker 
