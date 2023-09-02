@@ -6,7 +6,6 @@ import { Outlet } from "react-router-dom";
 export default function MainView() {
   return (
     <Container>
-      asdfasfasf
       <Header />
       <div className="main-view">
         <Outlet />
