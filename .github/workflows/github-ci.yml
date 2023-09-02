@@ -14,7 +14,6 @@ jobs:
       - name: Login to docer 
         uses: docker/login-action@v2
         with: 
-          registry: ${{secrets.DOCKER_REGISRY}}
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
       - name: Build
