@@ -7,7 +7,6 @@ export default function MainView() {
   return (
     <Container>
       <Header />
-      sdfdsafasdfadsfsdafasfd
       <div className="main-view">
         <Outlet />
       </div>
