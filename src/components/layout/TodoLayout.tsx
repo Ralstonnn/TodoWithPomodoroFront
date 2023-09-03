@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { TodoItemType } from "../../types/todo";
 import api from "../../api";
 import ComponentOverlayPreloader from "../common/ComponentOverlayPreloader";
+import TodoItemsFilters from "../todo/TodoItemsFilters";
 
 export default function TodoLayout() {
   const [todoItems, setTodoItems] = useState<TodoItemType[]>([]);
@@ -82,11 +83,8 @@ export default function TodoLayout() {
 
   return (
     <div className="todo-layout">
-      <div>
-        <button type="button" onClick={onDeleteDoneClick}>
-          DeleteAllChecked
-        </button>
-      </div>
+      <TodoItemsFilters onDeleteDoneClick={onDeleteDoneClick} />
+
       <div
         className={`todo-items-container ${
           todoLoading && !todoItems?.length ? "loading" : ""
@@ -101,25 +99,25 @@ export default function TodoLayout() {
           />
         ))}
         {todoLoading && <ComponentOverlayPreloader />}
-      </div>
 
-      <div className="todo-item-input-container">
-        <input
-          className="todo-item-input"
-          type="text"
-          placeholder="Enter new todo item"
-          value={todoInput}
-          disabled={todoLoading}
-          onKeyDown={onTodoInputKeyDown}
-          onInput={(e) => setTodoInput((e.target as HTMLInputElement).value)}
-        />
-        <button
-          className="todo-item-add"
-          disabled={todoLoading}
-          onClick={addNewTodoItem}
-        >
-          Add
-        </button>
+        <div className="todo-items-input-container">
+          <input
+            className="todo-items-input"
+            type="text"
+            placeholder="Enter new todo item"
+            value={todoInput}
+            disabled={todoLoading}
+            onKeyDown={onTodoInputKeyDown}
+            onInput={(e) => setTodoInput((e.target as HTMLInputElement).value)}
+          />
+          {/*<button*/}
+          {/*  className="todo-items-add"*/}
+          {/*  disabled={todoLoading}*/}
+          {/*  onClick={addNewTodoItem}*/}
+          {/*>*/}
+          {/*  Add*/}
+          {/*</button>*/}
+        </div>
       </div>
     </div>
   );

@@ -1,11 +1,48 @@
 .todo-layout {
-  .todo-items-container {
-    margin-top: 20px;
-    display: inline-block;
-    position: relative;
-    &.loading {
-      min-height: 100px;
-      min-width: 80px;
+  max-width: 970px;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .todo-items {
+    &-container {
+      display: flex;
+      max-width: 740px;
+      width: 100%;
+      padding: 30px 75px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+      &.loading {
+        min-height: 100px;
+        min-width: 80px;
+      }
+    }
+    &-input {
+      &-container {
+        display: flex;
+        width: 100%;
+      }
+      max-width: 300px;
+      width: 100%;
+      padding: 5px;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid black;
+    }
+    &-add {
+      margin-left: 10px;
+      padding: 5px 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .todo-layout {
+    .todo-items-container {
+      padding: 20px;
     }
   }
 }

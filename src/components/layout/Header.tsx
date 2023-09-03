@@ -14,17 +14,19 @@ export default function Header() {
 
   return (
     <div className="header">
-      <div className="header-actions">
-        <NavLink to="/todo">
-          <h1>Todo</h1>
-        </NavLink>
-        <NavLink to="/scrum">
-          <h1>Scrum</h1>
-        </NavLink>
-      </div>
-      <div className="header-info">
-        <h1 className="header-info__username">{profile?.username}</h1>
-        <ButtonComponent text="Logout" onClick={logout} />
+      <div className="header-wrapper">
+        <div className="header-actions">
+          <NavLink className="header-actions__button" to="/todo">
+            Todo
+          </NavLink>
+          <NavLink className="header-actions__button" to="/scrum">
+            Scrum
+          </NavLink>
+        </div>
+        <div className="header-info">
+          <div className="header-info__username">{profile?.username}</div>
+          {/*<ButtonComponent text="Logout" onClick={logout} />*/}
+        </div>
       </div>
     </div>
   );
